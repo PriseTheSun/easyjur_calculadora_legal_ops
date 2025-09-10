@@ -136,6 +136,7 @@
 
       .form-group {
         margin-bottom: 20px;
+        position: relative;
       }
 
       label {
@@ -178,6 +179,13 @@
         padding-left: 45px;
       }
 
+      .max-value-info {
+        font-size: 12px;
+        color: var(--cinza-escuro);
+        margin-top: 5px;
+        display: block;
+      }
+
       button {
         background: linear-gradient(to right, var(--verde), #4caf50);
         color: var(--branco);
@@ -203,17 +211,10 @@
         transform: translateY(-1px);
       }
 
-      .result-grid {
-        display: grid;
-        grid-template-columns: repeat(2, 1fr);
+      .result-column {
+        display: flex;
+        flex-direction: column;
         gap: 16px;
-      }
-
-      @media (max-width: 600px) {
-        .result-grid {
-          grid-template-columns: 1fr;
-          gap: 12px;
-        }
       }
 
       .result-card {
@@ -362,7 +363,6 @@
         color: var(--texto);
       }
 
-      /* Melhorias de responsividade para mobile */
       @media (max-width: 480px) {
         body {
           padding: 12px;
@@ -420,7 +420,6 @@
         }
       }
 
-      /* Melhorias para telas muito pequenas */
       @media (max-width: 360px) {
         .result-value {
           font-size: 18px;
@@ -444,7 +443,6 @@
         }
       }
 
-      /* Animações */
       @keyframes fadeIn {
         from {
           opacity: 0;
@@ -469,7 +467,6 @@
         box-shadow: 0 6px 10px rgba(0, 0, 0, 0.08);
       }
 
-      /* Garantir que o conteúdo não seja cortado */
       .card-body {
         overflow: visible;
       }
@@ -505,14 +502,15 @@
               <div class="input-icon">
                 <i class="fas fa-money-bill-wave"></i>
                 <input
-                  type="number"
+                  type="text"
                   id="salario_base"
-                  min="0"
-                  step="100"
-                  value="4500"
+                  inputmode="numeric"
+                  value="0"
                   placeholder="0,00"
+                  data-max="20000"
                 />
               </div>
+              <span class="max-value-info">Valor máximo: R$ 20.000,00</span>
             </div>
 
             <div class="form-group">
@@ -520,13 +518,15 @@
               <div class="input-icon">
                 <i class="fas fa-users"></i>
                 <input
-                  type="number"
+                  type="text"
                   id="qtd_adv"
-                  min="0"
-                  value="2"
+                  inputmode="numeric"
+                  value="0"
                   placeholder="0"
+                  data-max="100"
                 />
               </div>
+              <span class="max-value-info">Valor máximo: 100</span>
             </div>
 
             <h3
@@ -545,13 +545,15 @@
               <div class="input-icon">
                 <i class="fas fa-gavel"></i>
                 <input
-                  type="number"
+                  type="text"
                   id="qtd_audiencias"
-                  min="0"
-                  value="8"
+                  inputmode="numeric"
+                  value="0"
                   placeholder="0"
+                  data-max="10000"
                 />
               </div>
+              <span class="max-value-info">Valor máximo: 10.000</span>
             </div>
 
             <div class="form-group">
@@ -559,13 +561,15 @@
               <div class="input-icon">
                 <i class="fas fa-search"></i>
                 <input
-                  type="number"
+                  type="text"
                   id="qtd_diligencias"
-                  min="0"
-                  value="15"
+                  inputmode="numeric"
+                  value="0"
                   placeholder="0"
+                  data-max="10000"
                 />
               </div>
+              <span class="max-value-info">Valor máximo: 10.000</span>
             </div>
 
             <div class="form-group">
@@ -573,13 +577,15 @@
               <div class="input-icon">
                 <i class="fas fa-file-contract"></i>
                 <input
-                  type="number"
+                  type="text"
                   id="qtd_peticoes"
-                  min="0"
-                  value="25"
+                  inputmode="numeric"
+                  value="0"
                   placeholder="0"
+                  data-max="10000"
                 />
               </div>
+              <span class="max-value-info">Valor máximo: 10.000</span>
             </div>
 
             <div class="form-group">
@@ -587,13 +593,15 @@
               <div class="input-icon">
                 <i class="fas fa-newspaper"></i>
                 <input
-                  type="number"
+                  type="text"
                   id="qtd_publicacoes"
-                  min="0"
-                  value="300"
+                  inputmode="numeric"
+                  value="0"
                   placeholder="0"
+                  data-max="10000"
                 />
               </div>
+              <span class="max-value-info">Valor máximo: 10.000</span>
             </div>
 
             <button id="calcular">
@@ -616,44 +624,33 @@
             Resultado da Simulação
           </div>
           <div class="card-body">
-            <div class="result-grid">
+            <div class="result-column">
               <div class="result-card">
                 <div class="result-title">Custo atual com advogados CLT</div>
-                <div id="custo_clt" class="result-value clt-cost">
-                  R$ 15.300,00
-                </div>
+                <div id="custo_clt" class="result-value clt-cost">R$ 0,00</div>
               </div>
 
               <div class="result-card">
                 <div class="result-title">Custo com Legal Ops</div>
                 <div id="custo_legalops" class="result-value legalops-cost">
-                  R$ 6.540,00
+                  R$ 0,00
                 </div>
               </div>
 
               <div class="result-card">
                 <div class="result-title">Economia potencial</div>
-                <div id="economia" class="result-value positive">
-                  R$ 8.760,00
-                </div>
+                <div id="economia" class="result-value positive">R$ 0,00</div>
               </div>
 
               <div class="result-card">
                 <div class="result-title">ROI da terceirização</div>
-                <div id="roi" class="result-value positive">134%</div>
+                <div id="roi" class="result-value positive">0%</div>
               </div>
             </div>
 
             <div id="mensagem" class="explanation">
-              "Hoje, com advogados CLT, seu custo fixo mensal com encargos
-              trabalhistas é de aproximadamente
-              <span class="highlight">R$ 15.300</span>. Com a Legal Ops, o mesmo
-              volume de demandas sairia por
-              <span class="highlight">R$ 6.540</span>, gerando uma economia de
-              <span class="highlight positive">R$ 8.760/mês</span> e um ROI de
-              <span class="highlight positive">134%</span>. Isso significa
-              reduzir despesas, ter previsibilidade financeira e liberar sua
-              equipe para atividades estratégicas."
+              Preencha os dados ao lado para calcular a economia potencial com a
+              Legal Ops.
             </div>
           </div>
         </div>
@@ -716,23 +713,154 @@
         const roiElem = document.getElementById("roi");
         const mensagemElem = document.getElementById("mensagem");
 
-        // Função para formatar valores monetários
-        function formatarMoeda(valor) {
-          return new Intl.NumberFormat("pt-BR", {
-            style: "currency",
-            currency: "BRL",
-          }).format(valor);
+        // Função para formatar números com separadores de milhares
+        function formatarNumero(valor, isCurrency = false) {
+          if (isCurrency) {
+            return new Intl.NumberFormat("pt-BR", {
+              style: "currency",
+              currency: "BRL",
+            }).format(valor);
+          }
+
+          return new Intl.NumberFormat("pt-BR").format(valor);
+        }
+
+        // Função para remover formatação e converter para número
+        function desformatarNumero(valorFormatado) {
+          if (!valorFormatado) return 0;
+          // Remove todos os caracteres não numéricos, exceto vírgula
+          let valor = valorFormatado.replace(/[^\d,]/g, "");
+          // Substitui vírgula por ponto para conversão numérica
+          valor = valor.replace(",", ".");
+          // Converte para float e arredonda para 2 casas decimais
+          return parseFloat(valor) || 0;
+        }
+
+        // Função para formatar input em tempo real (apenas para exibição)
+        function formatarInput(event) {
+          const input = event.target;
+          let valor = input.value.replace(/[^\d,]/g, ""); // Mantém apenas números e vírgula
+
+          if (input.id === "salario_base") {
+            // Se estiver vazio, definir como 0
+            if (valor === "") {
+              input.value = "0,00";
+              return;
+            }
+
+            // Substitui múltiplas vírgulas por uma única vírgula
+            valor = valor.replace(/,+/g, ",");
+
+            // Divide em parte inteira e decimal
+            let [inteiro, decimal] = valor.split(",");
+
+            // Garante que a parte decimal tenha no máximo 2 dígitos
+            if (decimal && decimal.length > 2) {
+              decimal = decimal.slice(0, 2);
+            }
+
+            // Converte para número
+            let numero = parseFloat(`${inteiro || "0"}.${decimal || "00"}`);
+
+            // Formatar como moeda (sem o símbolo R$)
+            input.value = new Intl.NumberFormat("pt-BR", {
+              minimumFractionDigits: 2,
+              maximumFractionDigits: 2,
+            }).format(numero);
+          } else {
+            // Para outros campos (apenas números inteiros)
+            if (valor === "") {
+              input.value = "0";
+            } else {
+              // Remove vírgulas para números inteiros
+              valor = valor.replace(/,/g, "");
+              // Formatar com separadores de milhar
+              input.value = new Intl.NumberFormat("pt-BR").format(
+                parseInt(valor)
+              );
+            }
+          }
+
+          // Validar valor máximo
+          validarValorMaximo(input);
+        }
+
+        // Função para validar valor máximo
+        function validarValorMaximo(input) {
+          const max = parseInt(input.getAttribute("data-max")) || 0;
+          if (max === 0) return;
+
+          let valorAtual;
+
+          if (input.id === "salario_base") {
+            valorAtual = desformatarNumero(input.value);
+          } else {
+            valorAtual = parseInt(input.value.replace(/\D/g, "") || 0);
+          }
+
+          if (valorAtual > max) {
+            if (input.id === "salario_base") {
+              input.value = new Intl.NumberFormat("pt-BR", {
+                minimumFractionDigits: 2,
+                maximumFractionDigits: 2,
+              }).format(max);
+            } else {
+              input.value = new Intl.NumberFormat("pt-BR").format(max);
+            }
+          }
+        }
+
+        // Função para lidar com a entrada de dados no campo de salário
+        function handleSalarioInput(e) {
+          // Permitir números, vírgula e teclas de controle
+          if (
+            !/[\d,]/.test(e.key) &&
+            !["Backspace", "Delete", "ArrowLeft", "ArrowRight", "Tab"].includes(
+              e.key
+            )
+          ) {
+            e.preventDefault();
+            return;
+          }
+
+          // Evitar múltiplas vírgulas
+          if (e.key === "," && this.value.includes(",")) {
+            e.preventDefault();
+            return;
+          }
+        }
+
+        // Função para lidar com a entrada de dados nos campos numéricos
+        function handleNumericInput(e) {
+          // Permitir apenas números e teclas de controle
+          if (
+            !/\d/.test(e.key) &&
+            !["Backspace", "Delete", "ArrowLeft", "ArrowRight", "Tab"].includes(
+              e.key
+            )
+          ) {
+            e.preventDefault();
+            return;
+          }
         }
 
         // Função para calcular os resultados
         function calcular() {
-          // Obter valores dos inputs
-          const salarioBase = parseFloat(salarioBaseInput.value) || 0;
-          const qtdAdv = parseInt(qtdAdvInput.value) || 0;
-          const qtdAudiencias = parseInt(qtdAudienciasInput.value) || 0;
-          const qtdDiligencias = parseInt(qtdDiligenciasInput.value) || 0;
-          const qtdPeticoes = parseInt(qtdPeticoesInput.value) || 0;
-          const qtdPublicacoes = parseInt(qtdPublicacoesInput.value) || 0;
+          // Obter valores dos inputs (já desformatados)
+          const salarioBase = desformatarNumero(salarioBaseInput.value) || 0;
+          const qtdAdv = parseInt(qtdAdvInput.value.replace(/\D/g, "") || 0);
+          const qtdAudiencias = parseInt(
+            qtdAudienciasInput.value.replace(/\D/g, "") || 0
+          );
+          const qtdDiligencias = parseInt(
+            qtdDiligenciasInput.value.replace(/\D/g, "") || 0
+          );
+          const qtdPeticoes = parseInt(
+            qtdPeticoesInput.value.replace(/\D/g, "") || 0
+          );
+          const qtdPublicacoes = parseInt(
+            qtdPublicacoesInput.value.replace(/\D/g, "") || 0
+          );
 
           // Calcular custo CLT
           const custoTotalClt = salarioBase * 1.7 * qtdAdv;
@@ -750,14 +878,15 @@
             custoPeticoes +
             custoPublicacoes;
 
-          // Calcular economia e ROI
-          const economia = custoTotalClt - custoLegalOps;
-          const roi = custoLegalOps > 0 ? (economia / custoLegalOps) * 100 : 0;
+          // Calcular economia e ROI (não permitir valores negativos)
+          const economia = Math.max(0, custoTotalClt - custoLegalOps);
+          let roi = custoLegalOps > 0 ? (economia / custoLegalOps) * 100 : 0;
+          roi = Math.max(0, roi); // Garantir que ROI não seja negativo
 
           // Atualizar a interface
-          custoCltElem.textContent = formatarMoeda(custoTotalClt);
-          custoLegalOpsElem.textContent = formatarMoeda(custoLegalOps);
-          economiaElem.textContent = formatarMoeda(economia);
+          custoCltElem.textContent = formatarNumero(custoTotalClt, true);
+          custoLegalOpsElem.textContent = formatarNumero(custoLegalOps, true);
+          economiaElem.textContent = formatarNumero(economia, true);
           roiElem.textContent = `${roi.toFixed(0)}%`;
 
           // Atualizar classes para positivo/negativo
@@ -774,29 +903,37 @@
           }
 
           // Gerar mensagem explicativa
-          if (economia > 0) {
+          if (custoTotalClt === 0 && custoLegalOps === 0) {
+            mensagemElem.innerHTML =
+              "Preencha os dados ao lado para calcular a economia potencial com a Legal Ops.";
+          } else if (economia > 0) {
             mensagemElem.innerHTML = `
-                        "Hoje, com advogados CLT, seu custo fixo mensal com encargos trabalhistas é de aproximadamente <span class="highlight">${formatarMoeda(
-                          custoTotalClt
+                        Hoje, com advogados CLT, seu custo fixo mensal com encargos trabalhistas é de aproximadamente <span class="highlight">${formatarNumero(
+                          custoTotalClt,
+                          true
                         )}</span>. 
-                        Com a Legal Ops, o mesmo volume de demandas sairia por <span class="highlight">${formatarMoeda(
-                          custoLegalOps
+                        Com a Legal Ops, o mesmo volume de demandas sairia por <span class="highlight">${formatarNumero(
+                          custoLegalOps,
+                          true
                         )}</span>, 
-                        gerando uma economia de <span class="highlight positive">${formatarMoeda(
-                          economia
+                        gerando uma economia de <span class="highlight positive">${formatarNumero(
+                          economia,
+                          true
                         )}/mês</span> e um ROI de <span class="highlight positive">${roi.toFixed(
               0
             )}%</span>. 
                         Isso significa reduzir despesas, ter previsibilidade financeira e liberar sua equipe para atividades estratégicas.
-                        Fale com nosso consultor e faça uma simulação personalizada para a realidade atual do seu escritório."
+                        Fale com nosso consultor e faça uma simulação personalizada para a realidade atual do seu escritório.
                     `;
           } else {
             mensagemElem.innerHTML = `
-                        Neste caso, terceirizar via Legal Ops custaria <span class="highlight">${formatarMoeda(
-                          custoLegalOps
+                        Neste caso, terceirizar via Legal Ops custaria <span class="highlight">${formatarNumero(
+                          custoLegalOps,
+                          true
                         )}/mês</span>, 
-                        enquanto manter advogados CLT sairia por <span class="highlight">${formatarMoeda(
-                          custoTotalClt
+                        enquanto manter advogados CLT sairia por <span class="highlight">${formatarNumero(
+                          custoTotalClt,
+                          true
                         )}/mês</span>.
                         Mesmo assim, manter funcionários internos envolve custos e riscos adicionais, como demissões, substituições, treinamentos e erros que geram retrabalho.
                         A Legal Ops continua oferecendo benefícios estratégicos: redução de riscos trabalhistas, escalabilidade imediata e flexibilidade sem aumento de custos fixos.
@@ -804,13 +941,37 @@
           }
         }
 
-        // Event listeners
+        // Configurar event listeners para os inputs
+        const inputs = document.querySelectorAll('input[inputmode="numeric"]');
+        inputs.forEach((input) => {
+          // Formatar quando o input perde o foco
+          input.addEventListener("blur", formatarInput);
+
+          // Validar quando o input muda
+          input.addEventListener("input", function () {
+            validarValorMaximo(this);
+          });
+
+          // Adicionar validação de entrada de teclado
+          if (input.id === "salario_base") {
+            input.addEventListener("keydown", handleSalarioInput);
+          } else {
+            input.addEventListener("keydown", handleNumericInput);
+          }
+        });
+
+        // Event listeners para o botão calcular
         calcularBtn.addEventListener("click", calcular);
 
         // Calcular automaticamente quando qualquer input mudar
-        const inputs = document.querySelectorAll("input");
         inputs.forEach((input) => {
           input.addEventListener("input", calcular);
+        });
+
+        // Formatar os valores iniciais
+        inputs.forEach((input) => {
+          const event = { target: input };
+          formatarInput(event);
         });
 
         // Calcular inicialmente
