@@ -3,220 +3,343 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Calculadora Legal Ops | Versão Visual Simplificada</title>
+    <title>Calculadora Legal Ops</title>
     <style>
-      /* Paleta de cores fornecida: #E5293F (vermelho), #80929B (cinza-azulado), #FFF (branco), #000 (preto), #61CE70 (verde) */
-      body {
-        font-family: Arial, sans-serif;
-        background-color: #fff;
-        color: #000;
+      :root {
+        --primary: #2c3e50;
+        --secondary: #3498db;
+        --accent: #e74c3c;
+        --light: #ecf0f1;
+        --dark: #2c3e50;
+        --success: #27ae60;
+      }
+
+      * {
+        box-sizing: border-box;
         margin: 0;
-        padding: 20px;
-        max-width: 800px;
+        padding: 0;
+        font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+      }
+
+      body {
+        background-color: #f5f7fa;
+        color: var(--dark);
+        line-height: 1.6;
+      }
+
+      .container {
+        max-width: 1000px;
         margin: 0 auto;
+        padding: 20px;
       }
-      h1 {
-        color: #e5293f;
+
+      header {
         text-align: center;
-      }
-      .section {
         margin-bottom: 30px;
+        padding: 20px;
+        background-color: var(--primary);
+        color: white;
+        border-radius: 8px;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
       }
-      .input-group {
-        margin-bottom: 15px;
+
+      h1 {
+        margin-bottom: 10px;
       }
+
+      .calculator {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 30px;
+      }
+
+      @media (max-width: 768px) {
+        .calculator {
+          grid-template-columns: 1fr;
+        }
+      }
+
+      .input-section,
+      .result-section {
+        background-color: white;
+        padding: 25px;
+        border-radius: 8px;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+      }
+
+      .form-group {
+        margin-bottom: 20px;
+      }
+
       label {
         display: block;
-        margin-bottom: 5px;
-        color: #80929b;
-        font-weight: bold;
+        margin-bottom: 8px;
+        font-weight: 600;
       }
-      input[type="number"] {
+
+      input {
         width: 100%;
-        padding: 10px;
-        border: 1px solid #80929b;
-        border-radius: 5px;
-        box-sizing: border-box;
-      }
-      button {
-        background-color: #61ce70;
-        color: #fff;
-        border: none;
-        padding: 15px;
-        width: 100%;
+        padding: 12px;
+        border: 1px solid #ddd;
+        border-radius: 4px;
         font-size: 16px;
-        border-radius: 5px;
+      }
+
+      button {
+        background-color: var(--secondary);
+        color: white;
+        border: none;
+        padding: 12px 20px;
+        border-radius: 4px;
         cursor: pointer;
-        margin-top: 20px;
-      }
-      button:hover {
-        background-color: #4caf50;
-      }
-      table {
+        font-size: 16px;
+        font-weight: 600;
         width: 100%;
-        border-collapse: collapse;
+        transition: background-color 0.3s;
+      }
+
+      button:hover {
+        background-color: #2980b9;
+      }
+
+      .result-card {
+        background-color: var(--light);
+        padding: 15px;
+        border-radius: 6px;
+        margin-bottom: 15px;
+      }
+
+      .result-title {
+        font-weight: 600;
+        margin-bottom: 5px;
+      }
+
+      .result-value {
+        font-size: 24px;
+        font-weight: 700;
+      }
+
+      .clt-cost {
+        color: var(--accent);
+      }
+
+      .legalops-cost {
+        color: var(--secondary);
+      }
+
+      .savings {
+        color: var(--success);
+      }
+
+      .explanation {
         margin-top: 20px;
+        padding: 15px;
+        background-color: #f8f9fa;
+        border-left: 4px solid var(--secondary);
+        border-radius: 4px;
       }
-      th,
-      td {
-        padding: 10px;
-        border: 1px solid #80929b;
-        text-align: left;
-      }
-      th {
-        background-color: #e5293f;
-        color: #fff;
-      }
-      td {
-        background-color: #fff;
-      }
-      #resultados {
-        display: none;
-      }
-      .error {
-        color: #e5293f;
-        margin-top: 5px;
-        display: none;
+
+      .highlight {
+        font-weight: 700;
+        color: var(--primary);
       }
     </style>
   </head>
   <body>
-    <h1>Calculadora Legal Ops | Versão Visual Simplificada</h1>
+    <div class="container">
+      <header>
+        <h1>Calculadora Legal Ops</h1>
+        <p>
+          Simule a economia potencial ao terceirizar suas demandas jurídicas
+        </p>
+      </header>
 
-    <div class="section">
-      <h2>1. Entradas</h2>
-      <div class="input-group">
-        <label for="salario">Salário médio do advogado interno (R$)</label>
-        <input type="number" id="salario" min="0" step="0.01" required />
-        <div class="error" id="error-salario">
-          Valor deve ser maior que zero.
+      <div class="calculator">
+        <div class="input-section">
+          <h2>Dados da sua empresa</h2>
+          <div class="form-group">
+            <label for="salario_base"
+              >Salário médio do advogado interno (sem encargos) (R$)</label
+            >
+            <input
+              type="number"
+              id="salario_base"
+              min="0"
+              step="100"
+              value="4500"
+            />
+          </div>
+
+          <div class="form-group">
+            <label for="qtd_adv">Número de advogados contratados (CLT)</label>
+            <input type="number" id="qtd_adv" min="0" value="2" />
+          </div>
+
+          <h3>Volume mensal de demandas</h3>
+
+          <div class="form-group">
+            <label for="qtd_audiencias">Audiências presenciais/online</label>
+            <input type="number" id="qtd_audiencias" min="0" value="8" />
+          </div>
+
+          <div class="form-group">
+            <label for="qtd_diligencias">Diligências</label>
+            <input type="number" id="qtd_diligencias" min="0" value="15" />
+          </div>
+
+          <div class="form-group">
+            <label for="qtd_peticoes">Petições (iniciais/contestações)</label>
+            <input type="number" id="qtd_peticoes" min="0" value="25" />
+          </div>
+
+          <div class="form-group">
+            <label for="qtd_publicacoes">Publicações / Controladoria</label>
+            <input type="number" id="qtd_publicacoes" min="0" value="300" />
+          </div>
+
+          <button id="calcular">Calcular Economia</button>
+        </div>
+
+        <div class="result-section">
+          <h2>Resultado da Simulação</h2>
+
+          <div class="result-card">
+            <div class="result-title">Custo atual com advogados CLT</div>
+            <div id="custo_clt" class="result-value clt-cost">R$ 15.300,00</div>
+          </div>
+
+          <div class="result-card">
+            <div class="result-title">Custo equivalente com Legal Ops</div>
+            <div id="custo_legalops" class="result-value legalops-cost">
+              R$ 6.540,00
+            </div>
+          </div>
+
+          <div class="result-card">
+            <div class="result-title">Economia potencial</div>
+            <div id="economia" class="result-value savings">R$ 8.760,00</div>
+          </div>
+
+          <div class="result-card">
+            <div class="result-title">ROI da terceirização</div>
+            <div id="roi" class="result-value">134%</div>
+          </div>
+
+          <div id="mensagem" class="explanation">
+            "Hoje, com advogados CLT, seu custo fixo mensal com encargos
+            trabalhistas é de aproximadamente R$ 15.300. Com a Legal Ops, o
+            mesmo volume de demandas sairia por R$ 6.540, gerando uma economia
+            de R$ 8.760/mês e um ROI de 134%. Isso significa reduzir despesas,
+            ter previsibilidade financeira e liberar sua equipe para atividades
+            estratégicas."
+          </div>
         </div>
       </div>
-      <div class="input-group">
-        <label for="num-advogados"
-          >Número de advogados contratados para demandas operacionais</label
-        >
-        <input type="number" id="num-advogados" min="1" step="1" required />
-        <div class="error" id="error-num-advogados">
-          Valor deve ser pelo menos 1.
-        </div>
-      </div>
-      <div class="input-group">
-        <label for="horas-medias"
-          >Horas operacionais médias por advogado (opcional, padrão:
-          60h/mês)</label
-        >
-        <input
-          type="number"
-          id="horas-medias"
-          min="0"
-          step="0.01"
-          placeholder="60"
-        />
-        <div class="error" id="error-horas-medias">
-          Valor deve ser maior que zero.
-        </div>
-      </div>
-    </div>
-
-    <button id="simular">Simular agora</button>
-
-    <div id="resultados" class="section">
-      <h2>3. Saída</h2>
-      <table>
-        <thead>
-          <tr>
-            <th>Indicador</th>
-            <th>Resultado</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td>Custo atual do time interno (com encargos)</td>
-            <td id="custo-interno"></td>
-          </tr>
-          <tr>
-            <td>Custo médio com Legal Ops</td>
-            <td id="custo-terceirizado"></td>
-          </tr>
-          <tr>
-            <td>Economia potencial</td>
-            <td id="economia"></td>
-          </tr>
-          <tr>
-            <td>ROI da terceirização</td>
-            <td id="roi"></td>
-          </tr>
-          <tr>
-            <td>Ganho em horas de advogados internos</td>
-            <td id="horas-liberadas"></td>
-          </tr>
-        </tbody>
-      </table>
     </div>
 
     <script>
-      document.getElementById("simular").addEventListener("click", function () {
-        // Pegar valores das entradas
-        const salario = parseFloat(document.getElementById("salario").value);
-        const numAdvogados = parseInt(
-          document.getElementById("num-advogados").value
-        );
-        let horasMedias =
-          parseFloat(document.getElementById("horas-medias").value) || 60;
+      document.addEventListener("DOMContentLoaded", function () {
+        // Elementos do DOM
+        const salarioBaseInput = document.getElementById("salario_base");
+        const qtdAdvInput = document.getElementById("qtd_adv");
+        const qtdAudienciasInput = document.getElementById("qtd_audiencias");
+        const qtdDiligenciasInput = document.getElementById("qtd_diligencias");
+        const qtdPeticoesInput = document.getElementById("qtd_peticoes");
+        const qtdPublicacoesInput = document.getElementById("qtd_publicacoes");
+        const calcularBtn = document.getElementById("calcular");
 
-        // Validações
-        let valid = true;
-        document
-          .querySelectorAll(".error")
-          .forEach((el) => (el.style.display = "none"));
+        const custoCltElem = document.getElementById("custo_clt");
+        const custoLegalOpsElem = document.getElementById("custo_legalops");
+        const economiaElem = document.getElementById("economia");
+        const roiElem = document.getElementById("roi");
+        const mensagemElem = document.getElementById("mensagem");
 
-        if (isNaN(salario) || salario <= 0) {
-          document.getElementById("error-salario").style.display = "block";
-          valid = false;
-        }
-        if (isNaN(numAdvogados) || numAdvogados < 1) {
-          document.getElementById("error-num-advogados").style.display =
-            "block";
-          valid = false;
-        }
-        if (isNaN(horasMedias) || horasMedias <= 0) {
-          document.getElementById("error-horas-medias").style.display = "block";
-          valid = false;
+        // Função para formatar valores monetários
+        function formatarMoeda(valor) {
+          return new Intl.NumberFormat("pt-BR", {
+            style: "currency",
+            currency: "BRL",
+          }).format(valor);
         }
 
-        if (!valid) return;
+        // Função para calcular os resultados
+        function calcular() {
+          // Obter valores dos inputs
+          const salarioBase = parseFloat(salarioBaseInput.value) || 0;
+          const qtdAdv = parseInt(qtdAdvInput.value) || 0;
+          const qtdAudiencias = parseInt(qtdAudienciasInput.value) || 0;
+          const qtdDiligencias = parseInt(qtdDiligenciasInput.value) || 0;
+          const qtdPeticoes = parseInt(qtdPeticoesInput.value) || 0;
+          const qtdPublicacoes = parseInt(qtdPublicacoesInput.value) || 0;
 
-        // Cálculos
-        const custoRealMensal = salario * 1.7;
-        const custoHora = custoRealMensal / 160;
-        const custoInterno = numAdvogados * horasMedias * custoHora;
+          // Calcular custo CLT
+          const custoTotalClt = salarioBase * 1.7 * qtdAdv;
 
-        const numDemandas = numAdvogados * horasMedias; // Assumindo 1 demanda por hora
-        const custoTerceirizado = numDemandas * 150;
+          // Calcular custos por tipo de demanda
+          const custoAudiencias = qtdAudiencias * 180;
+          const custoDiligencias = qtdDiligencias * 80;
+          const custoPeticoes = qtdPeticoes * 120;
+          const custoPublicacoes = qtdPublicacoes * 3;
 
-        const economia = custoInterno - custoTerceirizado;
-        let roi = (economia / custoTerceirizado) * 100;
-        if (isNaN(roi) || custoTerceirizado === 0) {
-          roi = "N/A";
-        } else {
-          roi = roi.toFixed(2) + "%";
+          // Calcular custo total Legal Ops
+          const custoLegalOps =
+            custoAudiencias +
+            custoDiligencias +
+            custoPeticoes +
+            custoPublicacoes;
+
+          // Calcular economia e ROI
+          const economia = custoTotalClt - custoLegalOps;
+          const roi = custoLegalOps > 0 ? (economia / custoLegalOps) * 100 : 0;
+
+          // Atualizar a interface
+          custoCltElem.textContent = formatarMoeda(custoTotalClt);
+          custoLegalOpsElem.textContent = formatarMoeda(custoLegalOps);
+          economiaElem.textContent = formatarMoeda(economia);
+          roiElem.textContent = `${roi.toFixed(0)}%`;
+
+          // Gerar mensagem explicativa
+          if (economia > 0) {
+            mensagemElem.innerHTML = `
+                        "Hoje, com advogados CLT, seu custo fixo mensal com encargos trabalhistas é de aproximadamente <span class="highlight">${formatarMoeda(
+                          custoTotalClt
+                        )}</span>. 
+                        Com a Legal Ops, o mesmo volume de demandas sairia por <span class="highlight">${formatarMoeda(
+                          custoLegalOps
+                        )}</span>, 
+                        gerando uma economia de <span class="highlight">${formatarMoeda(
+                          economia
+                        )}/mês</span> e um ROI de <span class="highlight">${roi.toFixed(
+              0
+            )}%</span>. 
+                        Isso significa reduzir despesas, ter previsibilidade financeira e liberar sua equipe para atividades estratégicas.
+                        Fale com nosso consultor e faça uma simulação personalizada para a realidade atual do seu escritório."
+                    `;
+          } else {
+            mensagemElem.innerHTML = `
+                        Neste caso, terceirizar via Legal Ops custaria <span class="highlight">${formatarMoeda(
+                          custoLegalOps
+                        )}/mês</span>, 
+                        enquanto manter advogados CLT sairia por <span class="highlight">${formatarMoeda(
+                          custoTotalClt
+                        )}/mês</span>.
+                        Mesmo assim, manter funcionários internos envolve custos e riscos adicionais, como demissões, substituições, treinamentos e erros que geram retrabalho.
+                        A Legal Ops continua oferecendo benefícios estratégicos: redução de riscos trabalhistas, escalabilidade imediata e flexibilidade sem aumento de custos fixos.
+                    `;
+          }
         }
 
-        const horasLiberadas = numAdvogados * horasMedias;
+        // Event listeners
+        calcularBtn.addEventListener("click", calcular);
 
-        // Exibir resultados
-        document.getElementById("custo-interno").textContent =
-          "R$ " + custoInterno.toFixed(2) + "/mês";
-        document.getElementById("custo-terceirizado").textContent =
-          "R$ " + custoTerceirizado.toFixed(2) + "/mês";
-        document.getElementById("economia").textContent =
-          "R$ " + economia.toFixed(2) + "/mês";
-        document.getElementById("roi").textContent = roi;
-        document.getElementById("horas-liberadas").textContent =
-          horasLiberadas.toFixed(2) + "h/mês liberadas";
+        // Calcular automaticamente quando qualquer input mudar
+        const inputs = document.querySelectorAll("input");
+        inputs.forEach((input) => {
+          input.addEventListener("input", calcular);
+        });
 
-        document.getElementById("resultados").style.display = "block";
+        // Calcular inicialmente
+        calcular();
       });
     </script>
   </body>
